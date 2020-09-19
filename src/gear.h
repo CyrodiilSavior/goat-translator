@@ -12,8 +12,20 @@ private:
     bool solBState;
     bool solTCCState;
     void applyShift();
+    void commandFirst();
+    void commandSecond();
+    void commandThird();
+    void commandFourth();
+    void toggleLockup();
 
 public:
+    typedef int Gear;
+    const static Gear FirstGear = 1;
+    const static Gear SecondGear = 2;
+    const static Gear ThirdGear = 3;
+    const static Gear FourthGear = 4;
+
+
     GearManager(int shiftA, int shiftB, int TCC);
 
     struct CommandState {
@@ -22,15 +34,11 @@ public:
         bool TCC;
         int currentGear;
     };
-
+    void commandGear(Gear commanded);
     GearManager::CommandState getCommandState();
 
-    void commandFirst();
-    void commandSecond();
-    void commandThird();
-    void commandFourth();
-    void toggleLockup();
-
+private:
+    Gear currentGear;
 };
 
 #endif

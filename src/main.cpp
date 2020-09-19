@@ -11,6 +11,7 @@
 #include <Arduino.h>
 #include "logger.h"
 #include "gear.h"
+#include "reader.h"
 
 #define AISIN_TCC 13
 #define AISIN_SHIFT_A 12
@@ -22,6 +23,7 @@
 
 Logger *logger;
 GearManager *gearManager;
+Reader *reader;
 
 void setup() {
   Serial.begin(9600);
@@ -35,33 +37,15 @@ void setup() {
 
   //Setup Tools
   gearManager = new GearManager(AISIN_SHIFT_A, AISIN_SHIFT_B, AISIN_TCC);
-  logger = new Logger(gearManager);
-
-  //Command First Gear
-  gearManager->commandFirst();
+  logger = new Logger(gearManager, reader);
+  reader = new Reader(GM_SHIFT_A, GM_SHIFT_B, GM_TCC);
 
 }
 
 void loop() {
-  
   logger->currentStatus();
-  gearManager->commandSecond();
-  delay(2000);
+  GearManager::Gear commanded = reader->readCommandedGear();
+  gearManager->commandGear(commanded);
 
-  logger->currentStatus();
-  gearManager->commandThird();
-  delay(2000);
-
-  logger->currentStatus();
-  gearManager->toggleLockup();
-  delay(2000);
-
-  logger->currentStatus();
-  gearManager->commandFourth();
-  delay(2000);
-
-  logger->currentStatus();
-  gearManager->commandFirst();
-  delay(2000);
-
+  delay(1000);
 }

@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <gear.h>
+#include "gear.h"
 
 GearManager::GearManager(int shiftA, int shiftB, int TCC) {
     shiftAPin = shiftA;
@@ -8,13 +8,28 @@ GearManager::GearManager(int shiftA, int shiftB, int TCC) {
 }
 
 GearManager::CommandState GearManager::getCommandState() {
-    int currentGear = 0;
-    if (solAState == true && solBState == false) {currentGear = 1;}
-    if (solAState == true && solBState == true) {currentGear = 2;}
-    if (solAState == false && solBState == true) {currentGear = 3;}
-    if (solAState == false && solBState == false) {currentGear = 4;}
-
     return GearManager::CommandState{solAState, solBState, solTCCState, currentGear};
+}
+
+void GearManager::commandGear(GearManager::Gear commanded) {
+    switch (commanded)
+    {
+    case 1:
+        commandFirst();
+        break;
+    case 2:
+        commandSecond();
+        break;
+    case 3:
+        commandThird();
+        break;
+    case 4:
+        commandFourth();
+        break;                
+    default:
+        commandThird();
+        break;
+    }
 }
 
 void GearManager::commandFirst() {
@@ -22,24 +37,28 @@ void GearManager::commandFirst() {
     solBState = false;
     solTCCState = false;
     applyShift();
+    currentGear = GearManager::FirstGear;
 }
 
 void GearManager::commandSecond() {
     solAState = true;
     solBState = true;
     applyShift();
+    currentGear = GearManager::SecondGear;
 }
 
 void GearManager::commandThird() {
     solAState = false;
     solBState = true;
     applyShift();
+    currentGear = GearManager::ThirdGear;
 }
 
 void GearManager::commandFourth() {
     solAState = false;
     solBState = false;
     applyShift();
+    currentGear = GearManager::FourthGear;
 }
 
 void GearManager::toggleLockup() {
