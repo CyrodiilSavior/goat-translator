@@ -33,4 +33,5 @@ String Logger::currentStatus() {
 
 Logger::~Logger() {
    delete myGearManager;
+   delete myReader;
 }
