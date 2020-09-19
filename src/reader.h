@@ -17,6 +17,7 @@ class Reader {
         int rawShiftTCC();
 
         GearManager::Gear readCommandedGear();
+        GearManager::Lockup readConverterCommand();
 };
 
 #endif

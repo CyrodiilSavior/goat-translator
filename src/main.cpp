@@ -45,7 +45,9 @@ void setup() {
 void loop() {
   logger->currentStatus();
   GearManager::Gear commanded = reader->readCommandedGear();
+  GearManager::Lockup lockup = reader->readConverterCommand();
   gearManager->commandGear(commanded);
+  gearManager->commandLockup(lockup);
 
   delay(1000);
 }

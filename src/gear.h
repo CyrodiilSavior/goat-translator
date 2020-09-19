@@ -16,7 +16,6 @@ private:
     void commandSecond();
     void commandThird();
     void commandFourth();
-    void toggleLockup();
 
 public:
     typedef int Gear;
@@ -24,6 +23,10 @@ public:
     const static Gear SecondGear = 2;
     const static Gear ThirdGear = 3;
     const static Gear FourthGear = 4;
+
+    typedef bool Lockup;
+    const static Lockup Locked = true;
+    const static Lockup Unlocked = false;
 
 
     GearManager(int shiftA, int shiftB, int TCC);
@@ -35,10 +38,12 @@ public:
         int currentGear;
     };
     void commandGear(Gear commanded);
+    void commandLockup(Lockup commanded);
     GearManager::CommandState getCommandState();
 
 private:
     Gear currentGear;
+    void toggleLockup(Lockup commanded);
 };
 
 #endif

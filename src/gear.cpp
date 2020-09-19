@@ -11,6 +11,11 @@ GearManager::CommandState GearManager::getCommandState() {
     return GearManager::CommandState{solAState, solBState, solTCCState, currentGear};
 }
 
+void GearManager::commandLockup(Lockup commanded) {
+    toggleLockup(commanded);
+}
+
+
 void GearManager::commandGear(GearManager::Gear commanded) {
     switch (commanded)
     {
@@ -61,8 +66,8 @@ void GearManager::commandFourth() {
     currentGear = GearManager::FourthGear;
 }
 
-void GearManager::toggleLockup() {
-    solTCCState = !solTCCState;
+void GearManager::toggleLockup(Lockup commanded) {
+    solTCCState = commanded;
     applyShift();
 }
 

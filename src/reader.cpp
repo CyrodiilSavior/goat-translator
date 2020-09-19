@@ -20,10 +20,14 @@ int Reader::rawShiftTCC(){
     return analogRead(TCCPin);
 }
 
+GearManager::Lockup Reader::readConverterCommand(){
+    if (rawShiftTCC() > 500) {return GearManager::Locked;} else {return GearManager::Unlocked;}
+}
+
 
 GearManager::Gear Reader::readCommandedGear(){
-    int currentSolA = analogRead(shiftAPin);
-    int currentSolB = analogRead(shiftBPin);
+    int currentSolA = rawShiftA();
+    int currentSolB = rawShiftB();
 
     if (currentSolA > 500) {currentSolA = HIGH;} else {currentSolA = LOW;}
     if (currentSolB > 500) {currentSolB = HIGH;} else {currentSolB = LOW;}
