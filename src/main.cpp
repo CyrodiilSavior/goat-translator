@@ -37,9 +37,9 @@ void setup() {
 
   //Setup Tools
   gearManager = new GearManager(AISIN_SHIFT_A, AISIN_SHIFT_B, AISIN_TCC);
-  logger = new Logger(gearManager, reader);
   reader = new Reader(GM_SHIFT_A, GM_SHIFT_B, GM_TCC);
 
+  logger = new Logger(gearManager, reader);
 }
 
 void loop() {
@@ -49,5 +49,5 @@ void loop() {
   gearManager->commandGear(commanded);
   gearManager->commandLockup(lockup);
 
-  delay(1000);
+  delay(500);
 }

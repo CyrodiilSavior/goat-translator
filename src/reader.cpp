@@ -21,7 +21,7 @@ int Reader::rawShiftTCC(){
 }
 
 GearManager::Lockup Reader::readConverterCommand(){
-    if (rawShiftTCC() > 500) {return GearManager::Locked;} else {return GearManager::Unlocked;}
+    if (rawShiftTCC() > 25) {return GearManager::Locked;} else {return GearManager::Unlocked;}
 }
 
 
@@ -29,8 +29,8 @@ GearManager::Gear Reader::readCommandedGear(){
     int currentSolA = rawShiftA();
     int currentSolB = rawShiftB();
 
-    if (currentSolA > 500) {currentSolA = HIGH;} else {currentSolA = LOW;}
-    if (currentSolB > 500) {currentSolB = HIGH;} else {currentSolB = LOW;}
+    if (currentSolA > 25) {currentSolA = HIGH;} else {currentSolA = LOW;}
+    if (currentSolB > 25) {currentSolB = HIGH;} else {currentSolB = LOW;}
     
     if (!currentSolA && currentSolB) {return GearManager::FirstGear;}
     if (currentSolA && currentSolB) {return GearManager::SecondGear;}
